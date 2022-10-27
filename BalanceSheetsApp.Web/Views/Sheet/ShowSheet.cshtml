@@ -26,8 +26,17 @@
                     </div>
                 </th>
             </tr>
-            @foreach (var account in fClass.Accounts)
+            int index = 0;
+            decimal opBalActive = 0, opBalPassive = 0, debit = 0, credit = 0, clBalActive = 0, clBalPassive = 0;
+            foreach (var account in fClass.Accounts)
             {
+                opBalActive += account.OpeningBalance.Active;
+                opBalPassive += account.OpeningBalance.Passive;
+                debit += account.Debit;
+                credit += account.Credit;
+                clBalActive += account.ClosingBalance.Active;
+                clBalPassive += account.ClosingBalance.Passive;
+
                 <tr>
                     <td>@account.Number</td>
                     <td>@account.OpeningBalance.Active</td>
@@ -37,7 +46,34 @@
                     <td>@account.ClosingBalance.Active</td>
                     <td>@account.ClosingBalance.Passive</td>
                 </tr>
+
+                if (fClass.Accounts.Last() == account || (account.Number / 100) != (fClass.Accounts.ElementAt(index + 1).Number / 100))
+                {
+                    <tr>
+                        <th>@(account.Number / 100)</th>
+                        <th>@opBalActive</th>
+                        <th>@opBalPassive</th>
+                        <th>@debit</th>
+                        <th>@credit</th>
+                        <th>@clBalActive</th>
+                        <th>@clBalPassive</th>
+                    </tr>
+
+                    opBalActive = opBalPassive = debit = credit = clBalActive = clBalPassive = 0;
+                }
+
+                index++;
             }
+
+            <tr>
+                <th>По классу</th>
+                <th>@fClass.Accounts.Sum(a => a.OpeningBalance.Active)</th>
+                <th>@fClass.Accounts.Sum(a => a.OpeningBalance.Passive)</th>
+                <th>@fClass.Accounts.Sum(a => a.Debit)</th>
+                <th>@fClass.Accounts.Sum(a => a.Credit)</th>
+                <th>@fClass.Accounts.Sum(a => a.ClosingBalance.Active)</th>
+                <th>@fClass.Accounts.Sum(a => a.ClosingBalance.Passive)</th>
+            </tr>
         }
   </tbody>
 </table>

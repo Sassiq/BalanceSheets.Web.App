@@ -24,7 +24,7 @@ namespace BalanceSheetsApp.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Import()
+        public IActionResult Import()
         {
             return View();
         }
