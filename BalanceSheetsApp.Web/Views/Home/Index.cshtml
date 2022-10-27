@@ -3,7 +3,7 @@
     @{
         foreach (var bank in Model.BankViewModels)
         {
-            <a asp-controller="Sheet" asp-action="ShowSheet" asp-for-viewModel="@bank">@bank.Name</a>
+            <a asp-controller="Sheet" asp-action="ShowSheet" asp-route-id="@bank.Id">@bank.Name</a>
             <br />
         }
     }

@@ -17,9 +17,14 @@ namespace BalanceSheetsApp.Core.Services
             this.bankRepos = bankRepos;
         }
 
-        public async Task<ICollection<Bank>> ExportBanks()
+        public async Task<ICollection<Bank>> ExportBankNames()
         {
-            return await this.bankRepos.GetAll(new GetBanksSpecification());
+            return await this.bankRepos.GetAll(new GetBankNamesSpecification());
+        }
+
+        public async Task<Bank> ExportBank(int id)
+        {
+            return await this.bankRepos.Get(new GetBankByIdSpecification(id));
         }
     }
 }

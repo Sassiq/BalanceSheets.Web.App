@@ -1,13 +1,13 @@
 ﻿@model BankViewModel
 <table class="table table-bordered">
-  <thead>
-    <tr>
-        <th scope="col" rowspan="2">Б/сч</th>
+  <thead class="table-dark">
+    <tr align="center">
+        <th scope="col" rowspan="2" style="vertical-align: middle; text-align:center;">Б/сч</th>
         <th scope="col" colspan="2">Входящее сальдо</th>
         <th scope="col" colspan="2">Обороты</th>
         <th scope="col" colspan="2">Исходящее сальдо</th>
     </tr>
-    <tr>
+    <tr align="center">
   	    <th scope="col">Актив</th>
         <th scope="col">Пассив</th>
         <th scope="col">Дебет</th>
@@ -19,7 +19,13 @@
   <tbody>
       @foreach (var fClass in Model.FinancialClasses)
         {
-            <tr>@fClass.Name</tr>
+            <tr>
+                <th class="table-active" colspan="7">
+                    <div align="center">
+                        @fClass.Name
+                    </div>
+                </th>
+            </tr>
             @foreach (var account in fClass.Accounts)
             {
                 <tr>

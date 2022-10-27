@@ -9,6 +9,7 @@ namespace BalanceSheetsApp.Core.Interfaces
 {
     public interface IDataExportService
     {
-        Task<ICollection<Bank>> ExportBanks();
+        Task<Bank> ExportBank(int id);
+        Task<ICollection<Bank>> ExportBankNames();
     }
 }

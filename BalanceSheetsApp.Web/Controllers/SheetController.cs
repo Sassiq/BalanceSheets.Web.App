@@ -7,10 +7,12 @@ namespace BalanceSheetsApp.Web.Controllers
     public class SheetController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IExportViewModelService service;
 
-        public SheetController(ILogger<HomeController> logger)
+        public SheetController(ILogger<HomeController> logger, IExportViewModelService service)
         {
             _logger = logger;
+            this.service = service;
         }
 
         [HttpGet]
@@ -19,9 +21,9 @@ namespace BalanceSheetsApp.Web.Controllers
             return View();
         }
 
-        public IActionResult ShowSheet(BankViewModel viewModel)
+        public async Task<IActionResult> ShowSheet(int id)
         {
-            return View(viewModel);
+            return View(await this.service.ExportBank(id));
         }
     }
 }

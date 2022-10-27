@@ -14,12 +14,21 @@ namespace BalanceSheetsApp.Web.Services
             this.service = service;
         }
 
-        public async Task<ICollection<BankViewModel>> ExportBanks()
+        public async Task<BankViewModel> ExportBank(int id)
+        {
+            return ConvertToModel(await service.ExportBank(id));
+        }
+
+        public async Task<ICollection<BankViewModel>> ExportBankNames()
         {
             var bankViewModels = new List<BankViewModel>();
-            foreach (var bank in await service.ExportBanks())
+            foreach (var bank in await service.ExportBankNames())
             {
-                bankViewModels.Add(ConvertToModel(bank));
+                bankViewModels.Add(new BankViewModel()
+                {
+                    Id = bank.Id,
+                    Name = bank.Name,
+                });
             }
 
             return bankViewModels;

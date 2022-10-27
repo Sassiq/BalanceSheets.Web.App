@@ -20,7 +20,7 @@ namespace BalanceSheetsApp.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(new BankSelectorViewModel() { BankViewModels = await this.exportService.ExportBanks() });
+            return View(new BankSelectorViewModel() { BankViewModels = await this.exportService.ExportBankNames() });
         }
 
         [HttpGet]
