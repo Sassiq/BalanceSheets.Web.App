@@ -1,13 +1,10 @@
-﻿@model ImportViewModel
+﻿@model BankSelectorViewModel
 <div>
-    <form method="post" enctype="multipart/form-data">
-        <div asp-validation-summary="ModelOnly" />
-        <label asp-for="File" />
-        <input asp-for="File" type="file" accept="application/vnd.ms-excel"/>
-        <input type="submit" asp-controller="Home" asp-action="Import" />
-    </form>
-</div>
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @{
+        foreach (var bank in Model.BankViewModels)
+        {
+            <a asp-controller="Sheet" asp-action="ShowSheet" asp-for-viewModel="@bank">@bank.Name</a>
+            <br />
+        }
+    }
 </div>

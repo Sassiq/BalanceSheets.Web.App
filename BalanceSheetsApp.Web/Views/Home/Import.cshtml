@@ -1,0 +1,9 @@
+﻿@model ImportViewModel
+<div>
+    <form method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" />
+        <label asp-for="File" />
+        <input asp-for="File" type="file" accept="application/vnd.ms-excel"/>
+        <input type="submit" asp-controller="Home" asp-action="ImportExcel" />
+    </form>
+</div>

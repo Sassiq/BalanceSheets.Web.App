@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BalanceSheets.Infrastructure.Migrations
 {
     [DbContext(typeof(BalanceSheetsDbContext))]
-    [Migration("20221026233346_fourth")]
-    partial class fourth
+    [Migration("20221027154204_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,7 @@ namespace BalanceSheets.Infrastructure.Migrations
                     b.Property<int>("FinancialClassId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OpeningBalanceId")
+                    b.Property<int>("Number")
                         .HasColumnType("int");
 
                     b.Property<int>("TurnoverId")
@@ -43,12 +43,6 @@ namespace BalanceSheets.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FinancialClassId");
-
-                    b.HasIndex("OpeningBalanceId")
-                        .IsUnique();
-
-                    b.HasIndex("TurnoverId")
-                        .IsUnique();
 
                     b.ToTable("Accounts");
                 });
@@ -61,6 +55,9 @@ namespace BalanceSheets.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AccountId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Active")
                         .HasColumnType("decimal(18,2)");
 
@@ -68,6 +65,9 @@ namespace BalanceSheets.Infrastructure.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AccountId")
+                        .IsUnique();
 
                     b.ToTable("Balances");
                 });
@@ -130,6 +130,9 @@ namespace BalanceSheets.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccountId")
+                        .IsUnique();
+
                     b.ToTable("MoneyTurnovers");
                 });
 
@@ -141,23 +144,18 @@ namespace BalanceSheets.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BalanceSheetsApp.Core.Entities.Balance", "OpeningBalance")
-                        .WithOne("Account")
-                        .HasForeignKey("BalanceSheetsApp.Core.Entities.Account", "OpeningBalanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BalanceSheetsApp.Core.Entities.MoneyTurnover", "Turnover")
-                        .WithOne("Account")
-                        .HasForeignKey("BalanceSheetsApp.Core.Entities.Account", "TurnoverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("FinancialClass");
+                });
 
-                    b.Navigation("OpeningBalance");
+            modelBuilder.Entity("BalanceSheetsApp.Core.Entities.Balance", b =>
+                {
+                    b.HasOne("BalanceSheetsApp.Core.Entities.Account", "Account")
+                        .WithOne("OpeningBalance")
+                        .HasForeignKey("BalanceSheetsApp.Core.Entities.Balance", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Turnover");
+                    b.Navigation("Account");
                 });
 
             modelBuilder.Entity("BalanceSheetsApp.Core.Entities.FinancialClass", b =>
@@ -171,9 +169,23 @@ namespace BalanceSheets.Infrastructure.Migrations
                     b.Navigation("Bank");
                 });
 
-            modelBuilder.Entity("BalanceSheetsApp.Core.Entities.Balance", b =>
+            modelBuilder.Entity("BalanceSheetsApp.Core.Entities.MoneyTurnover", b =>
                 {
-                    b.Navigation("Account")
+                    b.HasOne("BalanceSheetsApp.Core.Entities.Account", "Account")
+                        .WithOne("Turnover")
+                        .HasForeignKey("BalanceSheetsApp.Core.Entities.MoneyTurnover", "AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("BalanceSheetsApp.Core.Entities.Account", b =>
+                {
+                    b.Navigation("OpeningBalance")
+                        .IsRequired();
+
+                    b.Navigation("Turnover")
                         .IsRequired();
                 });
 
@@ -185,12 +197,6 @@ namespace BalanceSheets.Infrastructure.Migrations
             modelBuilder.Entity("BalanceSheetsApp.Core.Entities.FinancialClass", b =>
                 {
                     b.Navigation("Accounts");
-                });
-
-            modelBuilder.Entity("BalanceSheetsApp.Core.Entities.MoneyTurnover", b =>
-                {
-                    b.Navigation("Account")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

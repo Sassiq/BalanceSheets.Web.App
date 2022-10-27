@@ -10,11 +10,16 @@ namespace BalanceSheetsApp.Core.Entities
     {
         public int Id { get; set; }
         public int Number { get; set; }
-        public int TurnoverId { get; set; }
         public MoneyTurnover Turnover { get; set; }
-        public int OpeningBalanceId { get; set; }
         public Balance OpeningBalance { get; set; }
-        public Balance ClosingBalance { get; set; }
+        public Balance ClosingBalance 
+        {
+            get => new Balance()
+            {
+                Active = OpeningBalance.Active != 0 ? OpeningBalance.Active + Turnover.Debit - Turnover.Credit : 0,
+                Passive = OpeningBalance.Passive != 0 ? OpeningBalance.Passive - Turnover.Debit + Turnover.Credit : 0,
+            };
+        }
         public int FinancialClassId { get; set; }
         public FinancialClass FinancialClass { get; set; }
     }

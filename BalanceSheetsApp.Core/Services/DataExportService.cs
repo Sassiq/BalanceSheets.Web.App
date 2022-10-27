@@ -1,5 +1,6 @@
 ﻿using BalanceSheetsApp.Core.Entities;
 using BalanceSheetsApp.Core.Interfaces;
+using BalanceSheetsApp.Core.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace BalanceSheetsApp.Core.Services
 {
-    public class DataImportService : IDataImportService
+    public class DataExportService : IDataExportService
     {
         private readonly IRepository<Bank> bankRepos;
-        public DataImportService(IRepository<Bank> bankRepos)
+        public DataExportService(IRepository<Bank> bankRepos)
         {
             this.bankRepos = bankRepos;
         }
 
-        public async Task ImportBank(Bank bank)
+        public async Task<ICollection<Bank>> ExportBanks()
         {
-            await this.bankRepos.Add(bank);
+            return await this.bankRepos.GetAll(new GetBanksSpecification());
         }
     }
 }

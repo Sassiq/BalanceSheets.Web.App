@@ -20,7 +20,6 @@ namespace BalanceSheets.Infrastructure.Repositories
         public async Task Add(T item)
         {
             await context.Set<T>().AddAsync(item);
-            context.Entry(item).State = EntityState.Detached;
             await context.SaveChangesAsync();
         }
 
@@ -52,14 +51,14 @@ namespace BalanceSheets.Infrastructure.Repositories
             await context.SaveChangesAsync();
         }
 
-        public T Get(ISpecification<T> specification)
+        public async Task<T> Get(ISpecification<T> specification)
         {
-            return ApplySpecification(context.Set<T>(), specification).FirstOrDefault();
+            return await ApplySpecification(context.Set<T>(), specification).FirstOrDefaultAsync();
         }
 
-        public ICollection<T> GetAll(ISpecification<T> specification)
+        public async Task<ICollection<T>> GetAll(ISpecification<T> specification)
         {
-            return ApplySpecification(context.Set<T>(), specification).ToList();
+            return await ApplySpecification(context.Set<T>(), specification).ToListAsync();
         }
 
         private IQueryable<T> ApplySpecification(IQueryable<T> query, ISpecification<T> specification)
@@ -67,7 +66,7 @@ namespace BalanceSheets.Infrastructure.Repositories
             IQueryable<T> result = specification.Apply(query);
             if (specification.Includes != null)
             {
-                foreach(var item in specification.Includes)
+                foreach (var item in specification.Includes)
                 {
                     result = result.Include(item);
                 }

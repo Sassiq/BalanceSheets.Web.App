@@ -8,12 +8,12 @@ namespace BalanceSheetsApp.Core.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        public Task<T> Get(int id);
-        public Task Add(T item);
-        public Task Delete(T item);
-        public Task Update(T item);
-        public Task<ICollection<T>> GetAll();
-        public T Get(ISpecification<T> specification);
-        public ICollection<T> GetAll(ISpecification<T> specification);
+        Task<T> Get(int id);
+        Task Add(T item);
+        Task Delete(T item);
+        Task Update(T item);
+        Task<T> Get(ISpecification<T> specification);
+        Task<ICollection<T>> GetAll();
+        Task<ICollection<T>> GetAll(ISpecification<T> specification);
     }
 }

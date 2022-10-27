@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BalanceSheetsApp.Core.Interfaces
 {
-    public interface IDataImportService
+    public interface IDataExportService
     {
-        Task ImportBank(Bank bank);
+        Task<ICollection<Bank>> ExportBanks();
     }
 }

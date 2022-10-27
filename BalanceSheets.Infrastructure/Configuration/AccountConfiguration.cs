@@ -20,17 +20,18 @@ namespace BalanceSheets.Infrastructure.Configuration
             builder
                 .HasOne(a => a.OpeningBalance)
                 .WithOne(b => b.Account)
-                .HasForeignKey<Account>(a => a.OpeningBalanceId);
+                .HasForeignKey<Balance>(b => b.AccountId);
+                
 
             builder
                 .HasOne(a => a.Turnover)
                 .WithOne(b => b.Account)
-                .HasForeignKey<Account>(a => a.TurnoverId);
+                .HasForeignKey<MoneyTurnover>(a => a.AccountId);
 
             builder
                 .HasOne(a => a.FinancialClass)
                 .WithMany(f => f.Accounts)
-                .HasForeignKey(a => a.FinancialClassId);
+                .HasForeignKey(f => f.FinancialClassId);
         }
     }
 }

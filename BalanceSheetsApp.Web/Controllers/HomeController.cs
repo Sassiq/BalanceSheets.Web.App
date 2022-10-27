@@ -9,27 +9,30 @@ namespace BalanceSheetsApp.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IImportViewModelService importService;
+        private readonly IExportViewModelService exportService;
 
-        public HomeController(ILogger<HomeController> logger, IImportViewModelService importService)
+        public HomeController(ILogger<HomeController> logger, IImportViewModelService importService, IExportViewModelService exportService)
         {
             this.importService = importService;
             _logger = logger;
+            this.exportService = exportService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            return View(new BankSelectorViewModel() { BankViewModels = await this.exportService.ExportBanks() });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Import()
         {
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public async Task<IActionResult> Import(ImportViewModel model)
+        public async Task<IActionResult> ImportExcel(ImportViewModel model)
         {
             await importService.Parse(model);
-            return View("Sosatt");
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

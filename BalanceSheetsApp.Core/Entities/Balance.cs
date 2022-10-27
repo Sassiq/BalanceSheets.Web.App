@@ -9,6 +9,7 @@ namespace BalanceSheetsApp.Core.Entities
     public class Balance
     {
         public int Id { get; set; }
+        public int AccountId { get; set; }
         public Account Account { get; set; }
         public decimal Active { get; set; }
         public decimal Passive { get; set; }

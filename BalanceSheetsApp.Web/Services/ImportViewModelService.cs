@@ -16,54 +16,8 @@ namespace BalanceSheetsApp.Web.Services
 
         public async Task Parse(ImportViewModel model)
         {
-            //Парсим парсим
-            // model.File
-
-
-            /*List<FinancialClass> financialClasses = new List<FinancialClass>();
-
             Bank bank = new Bank()
             {
-                Name = "Bank",
-                FinancialClasses = financialClasses,
-            };
-
-            FinancialClass financialClass = new FinancialClass()
-            {
-                Bank = bank,
-                Name = "aaaa",
-            };
-
-            financialClass.Accounts = new List<Account>();
-            bank.FinancialClasses.Add(financialClass);
-
-            Balance openingBalance = new Balance()
-            {
-                Active = 10.0m,
-                Passive = 11.0m,
-            };
-
-            MoneyTurnover turnover = new MoneyTurnover()
-            {
-                Debit = 10m,
-                Credit = 10m,
-            };
-
-            Account account = new Account()
-            {
-                Turnover = turnover,
-                OpeningBalance = openingBalance,
-                FinancialClass = financialClass,
-            };
-
-            financialClass.Accounts.Add(account);
-
-            openingBalance.Account = account;
-            turnover.Account = account;*/
-
-            Bank bank = new Bank()
-            {
-                Name = "test",
                 FinancialClasses = new List<FinancialClass>(),
             };
 
@@ -71,6 +25,8 @@ namespace BalanceSheetsApp.Web.Services
             {
                 WorkBook workBook = new WorkBook(fileStream);
                 WorkSheet cells = workBook.WorkSheets.First();
+                bank.Name = cells["A1:A1"].First().Text;
+
                 foreach (var cell in cells.Where(cell => cell.ColumnIndex == 0 && cell.RowIndex >= 8))
                 {
                     if (cell.Text.Contains("КЛАСС "))
@@ -101,7 +57,7 @@ namespace BalanceSheetsApp.Web.Services
 
                         bank.FinancialClasses.Last().Accounts.Add(new Account()
                         {
-                            Id = intValue,
+                            Number = intValue,
                             Turnover = turnover,
                             OpeningBalance = openingBalance,
                             FinancialClass = bank.FinancialClasses.Last(),

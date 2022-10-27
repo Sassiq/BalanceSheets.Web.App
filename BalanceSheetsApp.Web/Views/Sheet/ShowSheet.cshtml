@@ -1,0 +1,37 @@
+﻿@model BankViewModel
+<table class="table table-bordered">
+  <thead>
+    <tr>
+        <th scope="col" rowspan="2">Б/сч</th>
+        <th scope="col" colspan="2">Входящее сальдо</th>
+        <th scope="col" colspan="2">Обороты</th>
+        <th scope="col" colspan="2">Исходящее сальдо</th>
+    </tr>
+    <tr>
+  	    <th scope="col">Актив</th>
+        <th scope="col">Пассив</th>
+        <th scope="col">Дебет</th>
+        <th scope="col">Кредит</th>
+        <th scope="col">Актив</th>
+        <th scope="col">Пассив</th>
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (var fClass in Model.FinancialClasses)
+        {
+            <tr>@fClass.Name</tr>
+            @foreach (var account in fClass.Accounts)
+            {
+                <tr>
+                    <td>@account.Number</td>
+                    <td>@account.OpeningBalance.Active</td>
+                    <td>@account.OpeningBalance.Passive</td>
+                    <td>@account.Debit</td>
+                    <td>@account.Credit</td>
+                    <td>@account.ClosingBalance.Active</td>
+                    <td>@account.ClosingBalance.Passive</td>
+                </tr>
+            }
+        }
+  </tbody>
+</table>
