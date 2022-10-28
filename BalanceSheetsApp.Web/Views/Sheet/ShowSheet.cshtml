@@ -67,12 +67,12 @@
 
             <tr>
                 <th>По классу</th>
-                <th>@fClass.Accounts.Sum(a => a.OpeningBalance.Active)</th>
-                <th>@fClass.Accounts.Sum(a => a.OpeningBalance.Passive)</th>
-                <th>@fClass.Accounts.Sum(a => a.Debit)</th>
-                <th>@fClass.Accounts.Sum(a => a.Credit)</th>
-                <th>@fClass.Accounts.Sum(a => a.ClosingBalance.Active)</th>
-                <th>@fClass.Accounts.Sum(a => a.ClosingBalance.Passive)</th>
+                <th>@fClass.OpBalanceActSum</th>
+                <th>@fClass.OpBalancePasSum</th>
+                <th>@fClass.DebitSum</th>
+                <th>@fClass.CreditSum</th>
+                <th>@fClass.ClBalanceActSum</th>
+                <th>@fClass.ClBalancePasSum</th>
             </tr>
         }
   </tbody>

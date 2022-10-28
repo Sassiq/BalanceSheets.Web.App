@@ -1,10 +1,22 @@
 ﻿@model BankSelectorViewModel
 <div>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Банки</th>
+            </tr>
+        </thead>
+       
+    
     @{
         foreach (var bank in Model.BankViewModels)
         {
-            <a asp-controller="Sheet" asp-action="ShowSheet" asp-route-id="@bank.Id">@bank.Name</a>
-            <br />
+            <tr>
+                <td>
+                    <a asp-controller="Sheet" asp-action="ShowSheet" asp-route-id="@bank.Id">@bank.Name</a>
+                </td>
+            </tr>
         }
     }
+    </table>
 </div>
