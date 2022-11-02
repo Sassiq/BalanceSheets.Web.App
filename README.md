@@ -14,11 +14,11 @@ Here you can click the bank you want to view. Also you can click import to impor
 Here you can select bank sheet from your device by clicking button "Choose File" and then "Submit".  
 ![image](https://user-images.githubusercontent.com/62505206/198688595-5e3759d8-935f-4fe0-9948-ff67cd3877e7.png)  
   
-- *Bank sheet view page."  
+- *Bank sheet view page.*  
 Here you can view all information in sheet.  
 ![image](https://user-images.githubusercontent.com/62505206/198688928-214335ce-b8a2-40de-ac51-b7c6397bfb52.png)  
   
-- *Bank sheet view page. The second screen."  
+- *Bank sheet view page. The second screen.*  
 App counts sum of every Class columns.  
 ![image](https://user-images.githubusercontent.com/62505206/198689339-e80ef023-6e26-45c8-849b-3f65fadb2769.png)  
   
